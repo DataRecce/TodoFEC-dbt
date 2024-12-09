@@ -16,7 +16,7 @@ select
     cc.tran_id,
     cc.transaction_tp,
     cc.state,
-    cc.transaction_amt / 10
+    cc.transaction_amt / 10 as transaction_amt
 from presidential_candidates pc
 left join {{ ref('stg_contributions_from_committees_to_candidates') }} cc
     on pc.cand_id = cc.cand_id
