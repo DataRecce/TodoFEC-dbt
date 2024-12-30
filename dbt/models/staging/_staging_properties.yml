@@ -1,0 +1,723 @@
+version: 2
+
+models:
+  - name: stg_all_candidates
+    description: |
+        A candidate is an individual seeking nomination for election to a federal office. People become candidates when they (or agents working on their behalf) raise contributions or make expenditures that exceed $5,000. The all candidate summary file contains one record including summary financial information for all candidates who raised or spent money during the period no matter when they are up for election.
+    columns:
+      - name: cand_id
+        data_type: varchar
+        description: "{{ doc('cand_id') }}"
+
+      - name: cand_name
+        data_type: varchar
+        description: ""
+
+      - name: cand_ici
+        data_type: varchar
+        description: "{{ doc('cand_ici') }}"
+
+      - name: pty_cd
+        data_type: varchar
+        description: ""
+
+      - name: cand_pty_affiliation
+        data_type: varchar
+        description: "{{ doc('pty_affiliation') }}"
+
+      - name: ttl_receipts
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: trans_from_auth
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: ttl_disb
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: trans_to_auth
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: coh_bop
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: coh_cop
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: cand_contrib
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: cand_loans
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: other_loans
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: cand_loan_repay
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: other_loan_repay
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: debts_owed_by
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: ttl_indiv_contrib
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: cand_office_st
+        data_type: varchar
+        description: "{{ doc('cand_office_st') }}"
+
+      - name: cand_office_district
+        data_type: varchar
+        description: "{{ doc('office_district') }}"
+
+      - name: spec_election
+        data_type: varchar
+        description: "Special election status. Election result data included in 1996-2006 files only."
+
+      - name: prim_election
+        data_type: varchar
+        description: "Primary election status. Election result data included in 1996-2006 files only."
+
+      - name: run_election
+        data_type: varchar
+        description: "Runoff election status. Election result data included in 1996-2006 files only."
+
+      - name: gen_election
+        data_type: varchar
+        description: "General election status. Election result data included in 1996-2006 files only."
+
+      - name: gen_election_precent
+        data_type: decimal(7,4)
+        description: "General election percent. Election result data included in 1996-2006 files only."
+
+      - name: other_pol_cmte_contrib
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: pol_pty_contrib
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: cvg_end_dt
+        data_type: varchar
+        description: "{{ doc('cvg_end_dt') }}"
+
+      - name: indiv_refunds
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: cmte_refunds
+        data_type: decimal(14,2)
+        description: ""
+
+  - name: stg_candidate_committee_linkage
+    description: "Bridge data source connecting Candidate ID to Committee ID"
+    columns:
+      - name: cand_id
+        data_type: varchar
+        description: "{{ doc('cand_id') }}"
+
+      - name: cand_election_yr
+        data_type: varchar
+        description: "{{ doc('cand_election_yr') }}"
+
+      - name: fec_election_yr
+        data_type: varchar
+        description: "Active 2-year period."
+
+      - name: cmte_id
+        data_type: varchar
+        description: "{{ doc('cmte_id') }}"
+
+      - name: cmte_tp
+        data_type: varchar
+        description: "{{ doc('cmte_tp') }}"
+
+      - name: cmte_dsgn
+        data_type: varchar
+        description: "{{ doc('cmte_dsgn') }}"
+
+      - name: linkage_id # unique key
+        data_type: varchar
+        description: "Unique link ID"
+
+  - name: stg_candidate_master
+    description: "The candidate master file contains one record for each candidate who has either registered with the Federal Election Commission or appeared on a ballot list prepared by a state elections office. Includes address, office they are running for, party affiliation, etc."
+    columns:
+      - name: cand_id
+        data_type: varchar
+        description: "{{ doc('cand_id') }}"
+
+      - name: cand_name
+        data_type: varchar
+        description: ""
+
+      - name: cand_pty_affiliation
+        data_type: varchar
+        description: "{{ doc('pty_affiliation') }}"
+
+      - name: cand_election_yr
+        data_type: varchar
+        description: "{{ doc('cand_election_yr') }}"
+
+      - name: cand_office_st
+        data_type: varchar
+        description: "{{ doc('cand_office_st') }}"
+
+      - name: cand_office
+        data_type: varchar
+        description: |
+            H = House  
+            P = President  
+            S = Senate
+
+      - name: cand_office_district
+        data_type: varchar
+        description: "{{ doc('office_district') }}"
+
+      - name: cand_ici
+        data_type: varchar
+        description: "{{ doc('cand_ici') }}"
+
+      - name: cand_status
+        data_type: varchar
+        description: "{{ doc('cand_status') }}"
+
+      - name: cand_pcc
+        data_type: varchar
+        description: "{{ doc('cand_pcc') }}"
+
+      - name: cand_st1
+        data_type: varchar
+        description: "Mailing address - street"
+
+      - name: cand_st2
+        data_type: varchar
+        description: "Mailing address - street2"
+
+      - name: cand_city
+        data_type: varchar
+        description: "Mailing address - city"
+
+      - name: cand_st
+        data_type: varchar
+        description: "Mailing address - state"
+
+      - name: cand_zip
+        data_type: varchar
+        description: "Mailing address - ZIP code"
+
+  - name: stg_committee_master
+    description: "The committee master file contains one record for each committee registered with the Federal Election Commission. This includes federal political action committees and party committees, campaign committees for presidential, house and senate candidates, as well as groups or organizations who are spending money for or against candidates for federal office."
+    columns:
+      - name: cmte_id
+        data_type: varchar
+        description: "{{ doc('cmte_id') }}"
+
+      - name: cmte_nm
+        data_type: varchar
+        description: ""
+
+      - name: tres_nm
+        data_type: varchar
+        description: "{{ doc('tres_nm') }}"
+
+      - name: cmte_st1
+        data_type: varchar
+        description: ""
+
+      - name: cmte_st2
+        data_type: varchar
+        description: ""
+
+      - name: cmte_city
+        data_type: varchar
+        description: ""
+
+      - name: cmte_st
+        data_type: varchar
+        description: ""
+
+      - name: cmte_zip
+        data_type: varchar
+        description: ""
+
+      - name: cmte_dsgn
+        data_type: varchar
+        description: "{{ doc('cmte_dsgn') }}"
+
+      - name: cmte_tp
+        data_type: varchar
+        description: "{{ doc('cmte_tp') }}"
+
+      - name: cmte_pty_affiliation
+        data_type: varchar
+        description: "{{ doc('pty_affiliation') }}"
+
+      - name: cmte_filing_freq
+        data_type: varchar
+        description: "{{ doc('cmte_filing_freq') }}"
+
+      - name: org_tp
+        data_type: varchar
+        description: |
+           C = Corporation  
+           L = Labor organization  
+           M = Membership organization  
+           T = Trade association  
+           V = Cooperative  
+           W = Corporation without capital stock
+
+      - name: connected_org_nm
+        data_type: varchar
+        description: ""
+
+      - name: cand_id
+        data_type: varchar
+        description: "{{ doc('cand_id') }}"
+
+  - name: stg_contributions_from_committees_to_candidates
+    description: "Contains records of contributions from Committees to Candidates at sub ID level."
+    columns:
+      - name: cmte_id
+        data_type: varchar
+        description: "{{ doc('cmte_id') }}"
+
+      - name: amndt_ind
+        data_type: varchar
+        description: "{{ doc('amndt_ind') }}"
+
+      - name: rpt_tp
+        data_type: varchar
+        description: "{{ doc('rpt_tp') }}"
+
+      - name: transaction_pgi
+        data_type: varchar
+        description: "{{ doc('transaction_pgi') }}"
+
+      - name: image_num
+        data_type: varchar
+        description: "{{ doc('image_num') }}"
+
+      - name: transaction_tp
+        data_type: varchar
+        description: "Transaction types 24A, 24C, 24E, 24F, 24H, 24K, 24N, 24P, 24R, 24Z are included in the PAS2 file.
+For more information about transaction type codes see this list of transaction type codes: https://www.fec.gov/campaign-finance-data/transaction-type-code-descriptions"
+
+      - name: entity_tp
+        data_type: varchar
+        description: "{{ doc('entity_tp') }}"
+
+      - name: name
+        data_type: varchar
+        description: ""
+
+      - name: city
+        data_type: varchar
+        description: ""
+
+      - name: state
+        data_type: varchar
+        description: ""
+
+      - name: zip_code
+        data_type: varchar
+        description: ""
+
+      - name: employer
+        data_type: varchar
+        description: ""
+
+      - name: occupation
+        data_type: varchar
+        description: ""
+
+      - name: transaction_dt
+        data_type: varchar
+        description: ""
+
+      - name: transaction_amt
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: other_id
+        data_type: varchar
+        description: "For contributions from individuals this column is null. For contributions from candidates or other committees this column will contain the recipient's FEC ID."
+
+      - name: cand_id
+        data_type: varchar
+        description: "{{ doc('cand_id') }}"
+
+      - name: tran_id
+        data_type: varchar
+        description: "{{ doc('tran_id') }}"
+
+      - name: file_num
+        data_type: varchar
+        description: "{{ doc('file_num') }}"
+
+      - name: memo_cd
+        data_type: varchar
+        description: "Memo code. 'X' indicates that the amount of the transaction is not incorporated into the total figure disclosed on the detailed summary page of the committee’s report. 'X' may also indicate that the amount was received as part of a joint fundraising transfer or other lump sum contribution required to be attributed to individual contributors. Memo items may be used to denote that a transaction was previously reported or in the case of an independent expenditure, that the amount represents activity that has occurred but has not yet been paid by the committee. When using the bulk data file these memo items should be included in your analysis."
+
+      - name: memo_text
+        data_type: varchar
+        description: "A description of the activity. Memo text is available on itemized amounts on Schedules A and B. These transactions are included in the itemization total."
+
+      - name: sub_id # unique key
+        data_type: varchar
+        description: "{{ doc('sub_id') }}"
+
+  - name: stg_house_senate
+    description: "Shows total aggregated contributions to Congressional candidates. One record per Congressional candidate."
+    columns:
+      - name: cand_id
+        data_type: varchar
+        description: "{{ doc('cmte_id') }}"
+
+      - name: cand_name
+        data_type: varchar
+        description: ""
+
+      - name: cand_ici
+        data_type: varchar
+        description: "{{ doc('cand_ici') }}"
+
+      - name: pty_cd
+        data_type: varchar
+        description: ""
+
+      - name: cand_pty_affiliation
+        data_type: varchar
+        description: "{{ doc('pty_affiliation') }}"
+
+      - name: ttl_receipts
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: trans_from_auth
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: ttl_disb
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: trans_to_auth
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: coh_bop
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: coh_cop
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: cand_contrib
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: cand_loans
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: other_loans
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: cand_loan_repay
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: other_loan_repay
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: debts_owed_by
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: ttl_indiv_contrib
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: cand_office_st
+        data_type: varchar
+        description: ""
+
+      - name: cand_office_district
+        data_type: varchar
+        description: "{{ doc('office_district') }}"
+
+      - name: spec_election
+        data_type: varchar
+        description: ""
+
+      - name: prim_election
+        data_type: varchar
+        description: ""
+
+      - name: run_election
+        data_type: varchar
+        description: ""
+
+      - name: gen_election
+        data_type: varchar
+        description: ""
+
+      - name: gen_election_precent
+        data_type: decimal(7,4)
+        description: ""
+
+      - name: other_pol_cmte_contrib
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: pol_pty_contrib
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: cvg_end_dt
+        data_type: varchar
+        description: "{{ doc('cvg_end_dt') }}"
+
+      - name: indiv_refunds
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: cmte_refunds
+        data_type: decimal(14,2)
+        description: ""
+
+  - name: stg_operating_expenditures
+    description: "A master file (oppexp) listing committees' operating expenditures, which are found on Schedule B."
+    columns:
+      - name: cmte_id
+        data_type: varchar
+        description: "{{ doc('cmte_id') }}"
+
+      - name: amndt_ind
+        data_type: varchar
+        description: "{{ doc('amndt_ind') }}"
+
+      - name: rpt_yr
+        data_type: varchar
+        description: ""
+
+      - name: rpt_tp
+        data_type: varchar
+        description: "{{ doc('rpt_tp') }}"
+
+      - name: image_num
+        data_type: varchar
+        description: "{{ doc('image_num') }}"
+
+      - name: line_num
+        data_type: varchar
+        description: "Indicates FEC form line number"
+
+      - name: form_tp_cd
+        data_type: varchar
+        description: "Indicates FEC Form"
+
+      - name: sched_tp_cd
+        data_type: varchar
+        description: "Schedule B - Itemized disbursements"
+
+      - name: name
+        data_type: varchar
+        description: "Contributor/Lender/Transfer Name"
+
+      - name: city
+        data_type: varchar
+        description: ""
+
+      - name: state
+        data_type: varchar
+        description: ""
+
+      - name: zip_code
+        data_type: varchar
+        description: ""
+
+      - name: transaction_dt
+        data_type: varchar
+        description: ""
+
+      - name: transaction_amt
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: transaction_pgi
+        data_type: varchar
+        description: "{{ doc('transaction_pgi') }}"
+
+      - name: purpose
+        data_type: varchar
+        description: ""
+
+      - name: category
+        data_type: varchar
+        description: "Disbursement category code"
+
+      - name: category_desc
+        data_type: varchar
+        description: "Disbursement Category Code Description. See link for category codes: https://www.fec.gov/campaign-finance-data/disbursement-category-code-descriptions"
+
+      - name: memo_cd
+        data_type: varchar
+        description: "Memo code. 'X' indicates that the amount is NOT to be included in the itemization total."
+
+      - name: memo_text
+        data_type: varchar
+        description: "A description of the activity. Memo Text is available on itemized amounts on Schedule B. These transactions are included in the itemization total."
+
+      - name: entity_tp
+        data_type: varchar
+        description: "{{ doc('entity_tp') }}"
+
+      - name: sub_id
+        data_type: varchar
+        description: "{{ doc('sub_id') }}"
+
+      - name: file_num
+        data_type: varchar
+        description: "{{ doc('file_num') }}"
+
+      - name: tran_id
+        data_type: varchar
+        description: "{{ doc('tran_id') }}"
+
+      - name: back_ref_tran_id
+        data_type: varchar
+        description: "ONLY VALID FOR ELECTRONIC FILINGS. Used to associate one transaction with another transaction in the same report (using file number, transaction ID and back reference transaction ID). For example, a credit card payment and the subitemization of specific purchases. The back reference transaction ID of the specific purchases will equal the transaction ID of the payment to the credit card company."
+
+  - name: stg_pac_summary
+    description: "This file gives overall receipts and disbursements for each PAC and party committee registered with the commission, along with a breakdown of overall receipts by source and totals for contributions to other committees, independent expenditures made and other information."
+    columns:
+      - name: cmte_id
+        data_type: varchar
+        description: "{{ doc('cmte_id') }}"
+
+      - name: cmte_nm
+        data_type: varchar
+        description: ""
+
+      - name: cmte_tp
+        data_type: varchar
+        description: "{{ doc('cmte_tp') }}"
+
+      - name: cmte_dsgn
+        data_type: varchar
+        description: "{{ doc('cmte_dsgn') }}"
+
+      - name: cmte_filing_freq
+        data_type: varchar
+        description: "{{ doc('cmte_filing_freq') }}"
+
+      - name: ttl_receipts
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: trans_from_aff
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: indv_contrib
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: other_pol_cmte_contrib
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: cand_contrib
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: cand_loans
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: ttl_loans_received
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: ttl_disb
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: tranf_to_aff
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: indv_refunds
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: other_pol_cmte_refunds
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: cand_loan_repay
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: loan_repay
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: coh_bop
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: coh_cop
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: debts_owed_by
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: nonfed_trans_received
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: contrib_to_other_cmte
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: ind_exp
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: pty_coord_exp
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: nonfed_share_exp
+        data_type: decimal(14,2)
+        description: ""
+
+      - name: cvg_end_dt
+        data_type: varchar
+        description: "{{ doc('cvg_end_dt') }}"
+
+
